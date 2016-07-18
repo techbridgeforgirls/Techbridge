@@ -210,5 +210,5 @@ gulp.task('watch', cb => {
 });
 
 gulp.task('build', cb => {
-  runSequence('clean', ['config', 'nodemon', 'browserify', 'sass', 'copyfonts', 'lint', 'images'], 'mergeI18nStrings', cb);
+  runSequence('clean', ['config', 'browserify', 'sass', 'copyfonts', 'images'], 'mergeI18nStrings', cb);
 });
