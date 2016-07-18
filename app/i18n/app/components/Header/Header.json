@@ -1,0 +1,7 @@
+[
+  {
+    "id": "app.header.iLoveStem",
+    "description": "Header message",
+    "defaultMessage": "I {heart} STEM"
+  }
+]

@@ -1,0 +1,27 @@
+[
+  {
+    "id": "app.career.helpPeople",
+    "description": "Header description of how professionals help",
+    "defaultMessage": "{title} can help people:"
+  },
+  {
+    "id": "app.career.meetStar",
+    "description": "Header for Stars section",
+    "defaultMessage": "Meet a STEM star:"
+  },
+  {
+    "id": "app.career.classesTitle",
+    "description": "Header for classes section",
+    "defaultMessage": "Classes To Take"
+  },
+  {
+    "id": "app.career.videosTitle",
+    "description": "Header for videos section",
+    "defaultMessage": "Videos To Watch"
+  },
+  {
+    "id": "app.career.collegesTitle",
+    "description": "Header for colleges section",
+    "defaultMessage": "Colleges To Visit"
+  }
+]

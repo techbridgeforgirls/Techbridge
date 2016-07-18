@@ -1,0 +1,12 @@
+[
+  {
+    "id": "app.appError.unavailable",
+    "description": "Temporarily unavailable message",
+    "defaultMessage": "This page is unavailable."
+  },
+  {
+    "id": "app.appError.unavailable2",
+    "description": "Temporarily unavailable message",
+    "defaultMessage": "Please try again later."
+  }
+]

@@ -1,0 +1,12 @@
+{
+  "extends": ["../.eslintrc-common", "plugin:react/recommended"],
+
+  "env": {
+    "browser": true
+  },
+
+  "rules": {
+    "no-unused-vars": 1,
+    "react/prop-types": 1
+  }
+}

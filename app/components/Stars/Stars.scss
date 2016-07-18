@@ -1,0 +1,36 @@
+#tg-stars {
+    padding: 10px;
+    color: #e8168b;
+    margin: 0 auto;
+    max-width: 800px;
+  .profile {
+    width: 50%;
+    box-sizing: border-box;
+    padding: 20px;
+    float: left;
+  }
+  .profile-image {
+    width: 100%;
+  }
+  .heading {
+    font-size: 30px;
+    width: 50%;
+    float: left;
+  }
+  .video {
+    width: 220px;
+    box-sizing: border-box;
+    padding: 10px;
+    background: rgba(255, 255, 255, 0.8);
+    float: left;
+    cursor: pointer;
+    &>iframe {
+        width: 200px;
+        height: 200px;
+        pointer-events: none;
+    }
+  }
+  &:after {
+    clear: both;
+  }
+}

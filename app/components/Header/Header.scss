@@ -1,0 +1,61 @@
+#tg-header {
+  background-color: #fff;
+  font-size: 25px;
+  padding: 10px 20px;
+  overflow: hidden;
+
+  a {
+    text-decoration: none;
+  }
+
+  #tg-headerTitle {
+    color: #e8168b;
+    display: inline-block;
+    vertical-align: sub;
+  }
+
+  #tg-headerNav {
+    display: inline-block;
+    float: right;
+    font-size: 23px;
+
+    li {
+      display: inline-block;
+
+      a {
+        border-radius: 25px;
+        display: inline-block;
+        height: 23px;
+        padding: 10px;
+        width: 23px;
+
+        .glyphs {
+          vertical-align: top;
+        }
+
+        &.active {
+          background-color: #e8168b;
+
+          .glyphs {
+            color: #fff;
+          }
+        }
+      }
+    }
+  }
+}
+
+@media only screen and (max-width : 600px) {
+  #tg-header {
+    #tg-headerTitle {
+      display: block;
+      text-align: center;
+    }
+    #tg-headerNav {
+      display: block;
+      float: none;
+      margin-top: 5px;
+      text-align: center;
+    }
+  }
+}

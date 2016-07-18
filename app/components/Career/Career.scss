@@ -1,0 +1,55 @@
+#tg-career {
+  .tg-careerHeader {
+    display: inline-block;
+    font-size: 22px;
+    color: #e8168b;
+  }
+  .tg-careerBody {
+    color: #922d8d;
+    margin-left: 10px;
+    h3 {
+      margin: 0;
+    }
+    .tg-careerDetail {
+      display: inline-block;
+      width: 70%;
+      vertical-align: top;
+    }
+    .tg-starList {
+      display: inline-block;
+      width: 30%;
+      a {
+        color: inherit;
+      }
+      img {
+        height: 100px;
+        width: 100px;
+        border-radius: 50px;
+        display: inline-block;
+      }
+      .tg-starDetail {
+        display: inline-block;
+        vertical-align: top;
+        margin-left: 10px;
+      }
+    }
+  }
+  .tg-careerLists {
+    color: #4bb1d8;
+    font-size: 14px;
+    margin-top: 10px;
+    li.list {
+      display: inline-block;
+      background: #fff;
+      margin-left: 10px;
+      padding: 10px;
+      min-width: 150px;
+    }
+    .listTitle {
+      border-bottom: 1px solid #4bb1d8;
+      margin-bottom: 5px;
+      margin-top: 0;
+      padding-bottom: 5px;
+    }
+  }
+}

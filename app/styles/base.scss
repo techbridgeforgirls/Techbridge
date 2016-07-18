@@ -1,0 +1,28 @@
+body {
+  background-color: #feef35;
+  font-family: 'Fredoka One', cursive;
+  margin: 0;
+}
+
+.glyphs {
+  font-family: 'techbridgeregular';
+  color: #e8168b;
+}
+
+@font-face {
+    font-family: 'techbridgeregular';
+    src: url('font/techbridge-regular.eot');
+    src: url('font/techbridge-regular.eot?#iefix') format('embedded-opentype'),
+         url('font/techbridge-regular.woff2') format('woff2'),
+         url('font/techbridge-regular.woff') format('woff'),
+         url('font/techbridge-regular.ttf') format('truetype'),
+         url('font/techbridge-regular.svg#techbridgeregular') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+
+ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}

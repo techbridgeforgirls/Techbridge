@@ -1,0 +1,12 @@
+{
+  "app.appError.unavailable": "This page is unavailable.",
+  "app.appError.unavailable2": "Please try again later.",
+  "app.career.helpPeople": "{title} can help people:",
+  "app.career.meetStar": "Meet a STEM star:",
+  "app.career.classesTitle": "Classes To Take",
+  "app.career.videosTitle": "Videos To Watch",
+  "app.career.collegesTitle": "Colleges To Visit",
+  "app.careerPicker.iCouldBeA": "I could be a...",
+  "app.header.iLoveStem": "I {heart} STEM",
+  "app.interestList.iHeartList": "I {heart} {interest1} {interest2} {interest3}"
+}

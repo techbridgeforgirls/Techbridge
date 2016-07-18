@@ -1,0 +1,7 @@
+[
+  {
+    "id": "app.interestList.iHeartList",
+    "description": "List of user liked interests",
+    "defaultMessage": "I {heart} {interest1} {interest2} {interest3}"
+  }
+]
