@@ -11,7 +11,7 @@ class Stars extends React.Component {
     };
   }
 
-  componentWillMount() {
+  componentDidMount() {
     var that = this;
     // TOFIX: See if it is local RAM, else do the API call.
     let getData = new Promise(function (resolve) {
@@ -51,7 +51,8 @@ class Stars extends React.Component {
         <InterestList />
         <div className="profile">
           <img src={this.state.star.image} alt={this.state.star.name} className="profile-image"/>
-          {this.state.star.name}, {this.state.star.designation}
+          {this.state.star.name}, <br />
+          {this.state.star.designation}
         </div>
         <h1 className="heading">{this.state.star.heading}</h1>
         <div className="video" onClick={this.showLightbox.bind(this)}>
