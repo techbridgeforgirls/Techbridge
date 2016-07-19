@@ -15,7 +15,7 @@ $tg-font-size-boxes: 35px;
     width: 100%;
 
     a {
-      text-decoration: none;
+        text-decoration: none;
     }
 
     #tg-selectedInterests {
@@ -27,13 +27,12 @@ $tg-font-size-boxes: 35px;
         vertical-align: middle;
 
         .glyphs {
-        //   vertical-align: middle;
-          color: $tg-pink;
-          font-size: $tg-font-size-love + 10px;
+            color: $tg-pink;
+            font-size: $tg-font-size-love + 10px;
 
-          .glyphs-arrow {
-              font-size: $tg-font-size-boxes;
-          }
+            .glyphs-arrow {
+                font-size: $tg-font-size-boxes;
+            }
         }
 
         .interestItem {
@@ -68,18 +67,32 @@ $tg-font-size-boxes: 35px;
             // vertical-align: top;
         }
 
-        .continue {
+        a {
+            border-radius: 25px;
             display: inline-block;
-            min-width: 75px;
-            min-height: $tg-font-size-interests;
-            float: center;
-            padding: 2px 20px;
-            margin: 20px;
-            background: transparentize($tg-yellow, 1);
-            color: $tg-pink;
-            border-radius: 5px;
-            font-size: $tg-font-size-interests;
+            height: 10px;
+            padding: 10px;
+            width: 10px;
+            font-size: 10px;
             vertical-align: middle;
+            transform: rotate(270deg);
+
+            .glyphs {
+                vertical-align: top;
+                font-size: 30px;
+                height: inherit;
+                width: inherit;
+            }
+        }
+
+        a:visited {
+            color: $tg-pink;
+            .glyphs {
+                vertical-align: top;
+                font-size: 30px;
+                height: inherit;
+                width: inherit;
+            }
         }
     }
 
@@ -118,8 +131,8 @@ $tg-font-size-boxes: 35px;
         }
 
         .glyphs {
-          vertical-align: middle;
-          color: $tg-blue;
+            vertical-align: middle;
+            color: $tg-blue;
         }
 
         table {

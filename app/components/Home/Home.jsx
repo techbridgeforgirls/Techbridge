@@ -6,21 +6,15 @@ import { selectInterests, deselectInterests } from '../../actions/apiActions.js'
 
 const messages = defineMessages({
     iHeartInterests: {
-      id: 'app.home.iHeartInterests',
-      description: 'List of user liked interests',
-      defaultMessage: 'I {heart} {interest1} {interest2} {interest3}'
+        id: 'app.home.iHeartInterests',
+        description: 'List of user liked interests',
+        defaultMessage: 'I {heart} {interest1} {interest2} {interest3}'
     },
 
     whatYouLove: {
         id: 'app.home.whatYouLove',
         description: 'What you love header',
         defaultMessage: 'WHAT DO YOU LOVE?'
-    },
-
-    continue: {
-        id: 'app.home.continue',
-        description: 'Continue button',
-        defaultMessage: '{arrow}'
     }
 });
 
@@ -28,10 +22,6 @@ const glyph = <span className="glyphs">&#57344;</span>;
 const maxOptions = 3;
 
 export class Home extends React.Component {
-    handleClick() {
-        //go to next page with query parameters
-    }
-
     render() {
         return (
             <div id="tg-root">
@@ -53,10 +43,10 @@ Home.propTypes = {
 };
 
 export default connect((state) => ({
-  interests: state.interests
+    interests: state.interests
 }))(Home);
 
-var SelectedInterests = React.createClass({ /**!**/ //needs to be completely reworked to properly wire in with the prop
+var SelectedInterests = React.createClass({
     propTypes: {
         interests: React.PropTypes.object
     },
@@ -75,16 +65,17 @@ var SelectedInterests = React.createClass({ /**!**/ //needs to be completely rew
         }
 
         let strVals = {
-          heart: heart,
-          interest1: interest[0],
-          interest2: interest[1],
-          interest3: interest[2]
+            heart: heart,
+            interest1: interest[0],
+            interest2: interest[1],
+            interest3: interest[2]
         };
 
         return(
-          <div id="tg-selectedInterests">
+            <div id="tg-selectedInterests">
             <FormattedMessage {...messages.iHeartInterests} values={strVals}/>
-          </div>
+            <Link to="/careerpicker" activeClassName="active"><span>{heart}</span></Link>
+            </div>
         );
     }
 });
@@ -139,8 +130,8 @@ var InterestOptionsList = React.createClass({
                     <table id="interestsListTable">
                         <tbody>
                             {rows}
-                        </tbody>
-                    </table>
+                            </tbody>
+                        </table>
                 </div>
             </div>
         );

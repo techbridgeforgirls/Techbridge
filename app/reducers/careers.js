@@ -6,7 +6,8 @@ export default function careers(state = { }, action) {
   switch(action.type) {
     case REQUEST_CAREERS:
       return Object.assign({}, state, {
-        isFetching: true
+        isFetching: true,
+        data: undefined
       });
 
     case RECEIVE_CAREERS:

@@ -13,10 +13,10 @@ import { Video } from '../components/Video/Video';
 import { Settings } from '../components/Settings/Settings';
 import CareerPicker from '../components/CareerPicker/CareerPicker';
 import Career from '../components/Career/Career';
-import { Stars } from '../components/Stars/Stars';
+import Stars from '../components/Stars/Stars';
 
 // Actions
-import { initState } from '../actions/apiActions';
+import { initState,  getInterestsId } from '../actions/apiActions';
 
 
 export default function(history, store) {
@@ -24,7 +24,7 @@ export default function(history, store) {
   function onEnterRoute(nextState, replace) {
     // Make sure the query data is consistent with the state
     var interests = store.getState().interests;
-    var interestList = interests && interests.selected && interests.selected.join(',');
+    var interestList =  getInterestsId(interests && interests.selected);
     if (interestList && !nextState.location.query.interests) {
       var newQuery = Object.assign({ }, nextState.location.query, { interests: interestList });
       replace({

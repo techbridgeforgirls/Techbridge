@@ -1,36 +1,15 @@
 import React from 'react';
 import { InterestList } from '../InterestList/InterestList';
 import { Lightbox } from '../Lightbox/Lightbox';
+import { connect } from 'react-redux';
 
-class Stars extends React.Component {
+export class Stars extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       starId: this.props.params.starId,
       star: {}
     };
-  }
-
-  componentDidMount() {
-    var that = this;
-    // TOFIX: See if it is local RAM, else do the API call.
-    let getData = new Promise(function (resolve) {
-      setTimeout(function() {
-        resolve({
-          id: that.props.params.starId,
-          name: 'Katie',
-          heading: 'Hi there! My name is Katie, I love working as a food scientist at Kraft. I invent new smoothies!',
-          image: 'http://placehold.it/400x400&text=Profile%20Image',
-          video: 'https://www.youtube.com/embed/d6VXDw_oA0Y',
-          videoTitle: 'Sample Video',
-          designation: 'Food Scientist, Kraft'
-        });
-      }, 200);
-    });
-
-    getData.then(function (starData) {
-      that.setState({ star: starData });
-    });
   }
 
   showLightbox() {
@@ -40,24 +19,44 @@ class Stars extends React.Component {
   hideLightbox() {
     this.setState({ showVideo: false });
   }
+  getRoleModel() {
+    var careerData = this.props.careerData;
+    var roleModels = careerData && careerData.data && careerData.data.rolemodels;
+    var model = {};
+    if (roleModels) {
+      roleModels.some((rolemodel) => {
+        if (rolemodel.id === this.props.params.starId)
+        {
+          model = Object.assign(rolemodel, {
+            video: rolemodel.video.replace('/watch?v=', '/embed/')
+          });
+          return true;
+        }
+      });
+    }
+    return model;
+  }
 
   render() {
+    var rolemodel = this.getRoleModel();
+
+    var interestsList = this.props.interests.selected;
     var lightbox;
     if (this.state.showVideo) {
-      lightbox = <Lightbox src={this.state.star.video} title={this.state.star.videoTitle} onClose={this.hideLightbox.bind(this)}></Lightbox>;
+      lightbox = <Lightbox src={rolemodel.video} title={rolemodel.videotitle} onClose={this.hideLightbox.bind(this)}></Lightbox>;
     }
     return(
       <div id="tg-stars">
-        <InterestList />
+        <InterestList interestList={interestsList}/>
         <div className="profile">
-          <img src={this.state.star.image} alt={this.state.star.name} className="profile-image"/>
-          {this.state.star.name}, <br />
-          {this.state.star.designation}
+          <img src={rolemodel.image} className="profile-image"/>
+          {rolemodel.firstname} {rolemodel.lastname}, <br />
+          {rolemodel.jobtitle}
         </div>
-        <h1 className="heading">{this.state.star.heading}</h1>
+        <h1 className="heading">{rolemodel.blurb}</h1>
         <div className="video" onClick={this.showLightbox.bind(this)}>
-          <iframe type="text/html" src={this.state.star.video} frameBorder="0"/>
-          {this.state.star.videoTitle}
+          <iframe type="text/html" src={rolemodel.video} frameBorder="0"/>
+          {rolemodel.videotitle}
         </div>
         {lightbox}
       </div>
@@ -66,7 +65,15 @@ class Stars extends React.Component {
 }
 
 Stars.propTypes = {
-  params: React.PropTypes.object
+  interests: React.PropTypes.object,
+  careerData: React.PropTypes.object,
+  params: React.PropTypes.object,
+  location: React.PropTypes.object
 };
 
-export { Stars };
+export default connect((state) => ({
+  interests: state.interests,
+  careerData: state.careerData
+}))(Stars);
+
+

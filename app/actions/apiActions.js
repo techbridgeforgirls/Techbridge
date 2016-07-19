@@ -17,12 +17,14 @@ const INTERESTS_PATH = "/interests";
 const CAREERS_PATH = "/careers";
 const ROLEMODEL_PATH = "/rolemodels";
 
+const INTERESTS_DELIM = ';';
+
 /**
     Caching API responses
 **/
 
-function getInterestsId(interests) {
-  return interests.join(',');
+export function getInterestsId(interests) {
+  return interests && interests.join(INTERESTS_DELIM);
 }
 
 // Lookup from list of interests to career objects
@@ -201,7 +203,7 @@ function fetchCareerData(careerId) {
 export function getCareerData(careerId) {
   return (dispatch, getState) => {
     var careerData = getState().careerData;
-    if (!careerData || careerData.careerId !== careerId) {
+    if (!careerData || careerData.id !== careerId) {
       return dispatch(fetchCareerData(careerId));
     }
     return Promise.resolve();
@@ -232,7 +234,7 @@ export function deselectInterests(interestIds) {
 
 export function initState(query) {
   return dispatch => {
-    var interestIds = query.interests ? query.interests.split(',') : [];
+    var interestIds = query.interests ? query.interests.split(INTERESTS_DELIM) : [];
 
     return dispatch(getInterests())
       .then(() => dispatch(selectInterests(interestIds)))
