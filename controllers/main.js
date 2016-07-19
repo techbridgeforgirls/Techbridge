@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactDOMServer from 'react-dom/server';
-import { createStore, combineReducers } from 'redux';
+import { createStore, combineReducers, applyMiddleware } from 'redux';
+import thunkMiddleware from 'redux-thunk';
 import { useRouterHistory, RouterContext, match } from 'react-router';
 import { createMemoryHistory, useQueries } from 'history';
 import { Provider } from 'react-redux';
@@ -43,7 +44,7 @@ export default function(app) {
         res.status(404).send('Not found');
       } else {
         // Setup the Redux store
-        const store = createStore(reducer);
+        const store = createStore(reducer, { }, applyMiddleware(thunkMiddleware));
         let appComponent = prepareAppHelper(store, req, renderProps);
         let curState = store.getState();
         let lang = curState && curState.app && curState.app.language;

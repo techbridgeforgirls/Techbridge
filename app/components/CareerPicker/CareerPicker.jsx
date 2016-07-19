@@ -1,7 +1,9 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import { FormattedMessage, defineMessages } from 'react-intl';
 import { Link } from 'react-router';
 import { InterestList } from '../InterestList/InterestList';
+import { getCareers } from '../../actions/apiActions';
 
 const messages = defineMessages({
   iCouldBeA: {
@@ -22,35 +24,27 @@ class CareerPicker extends React.Component {
   constructor(props) {
     super(props);
 
+    // TOFIX: Splitting and joining of the params is ugly
     this.state = {
-      interests: this.props.params.interests.split(','),
-      careers: []
+      interests: this.props.params.interests.split(',')
     };
   }
   componentDidMount() {
-    // Only fetch the career data after mounting. This code won't run on the server (only on the client)
-    var that = this;
-
-    // TOFIX: Replace with actual API call, with real data
-    let getData = new Promise(function (resolve) {
-      setTimeout(function () {
-        resolve(['Biologist', 'Molecular Biologist', 'Biochemical Engineer', 'Biomechanical Engineer']);
-      }, 100);
-    });
-
-    getData.then(function (careers) {
-      that.setState({ careers: careers });
-    });
+    // Request the careers (this will trigger a render when the global state changes)
+    this.props.dispatch(getCareers(this.state.interests));
   }
   render() {
 
+    var careers = this.props.careers[this.props.params.interests] || {};
+    var careerList = careers.list || [];
+
     // Construct the list of careers
     var careerElements = [];
-    this.state.careers.forEach(function (career, index) {
+    careerList.forEach(function (career, index) {
         careerElements.push(
-          <Link to={'/career'} key={index}>
+          <Link to={'/career'} key={career.id}>
             <div className="career-circle" style={careerPositions[index]}>
-              <span className="career-circle-text">{career}</span>
+              <span className="career-circle-text">{career.name}</span>
             </div>
           </Link>
         );
@@ -71,7 +65,14 @@ class CareerPicker extends React.Component {
 }
 
 CareerPicker.propTypes = {
-  params: React.PropTypes.object
+  params: React.PropTypes.object,
+  careers: React.PropTypes.object,
+  dispatch: React.PropTypes.func
 };
 
 export { CareerPicker };
+
+export default connect((state) => ({
+  interests: state.interests,
+  careers: state.careers
+}))(CareerPicker);

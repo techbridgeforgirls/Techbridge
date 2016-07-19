@@ -1,7 +1,8 @@
 #tg-career {
+  margin: 30px 20px;
   .tg-careerHeader {
     display: inline-block;
-    font-size: 22px;
+    font-size: 25px;
     color: #e8168b;
   }
   .tg-careerBody {
@@ -14,6 +15,17 @@
       display: inline-block;
       width: 70%;
       vertical-align: top;
+      h3 {
+        font-size: 30px;
+        margin-top: 25px;
+      }
+      ul {
+        font-size: 20px;
+        margin-top: 25px;
+        li {
+          margin-top: 5px;
+        }
+      }
     }
     .tg-starList {
       display: inline-block;
