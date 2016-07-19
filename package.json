@@ -8,7 +8,7 @@
     "url": "https://git.corp.adobe.com/jmitchel/rolemodels"
   },
   "scripts": {
-    "start": "node index.js",
+    "start": "./node_modules/.bin/babel-node",
     "postinstall": "gulp build",
     "lint": "gulp lintServer && gulp lintClient"
   },
