@@ -12,6 +12,9 @@
     "postinstall": "gulp build",
     "lint": "gulp lintServer && gulp lintClient"
   },
+  "engines": {
+    "node": "4.3.1"
+  },
   "author": "Adobe",
   "dependencies": {
     "babel": "^6.3.26",
