@@ -2,10 +2,13 @@
   "name": "rolemodels",
   "version": "0.0.1",
   "description": "Tech Bridge For Girls app used to connect people to rolemodels",
+  "engines": {
+    "node": "4.1.1"
+    }
   "main": "index.js",
   "repository": {
     "type": "git",
-    "url": "https://git.corp.adobe.com/jmitchel/rolemodels"
+    "url": "https://github.com/techbridgeforgirls"
   },
   "scripts": {
     "start": "node index.js",
