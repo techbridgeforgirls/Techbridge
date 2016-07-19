@@ -7,7 +7,7 @@ flow of the application with the expectation that the rest of the application wi
 a later time after we hand off the project.
 
 ##Basic Flow (4 screens)
-![application flow](https://github.com/techbridgeforgirls/techbridge/master/wiki/appFlow.jpg?token=AAA13-eAlPJLxbIgYD_LXesjbOMiAowjks5Xj6wFwA%3D%3D)
+![application flow](https://github.com/techbridgeforgirls/techbridge/blob/master/wiki/appFlow.jpg)
 
 ##Summary of Work
 1. Create web app supporting the 4 screens shown above. This includes navigation as well
