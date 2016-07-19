@@ -1,0 +1,19 @@
+{
+  "presets": ["es2015", "stage-0", "react"],
+
+  "plugins": [
+    ["transform-class-properties"],
+    ["transform-decorators-legacy"],
+    ["transform-object-assign"],
+    ["es6-promise"],
+    ["transform-es2015-classes", { "loose": true } ],
+    ["transform-proto-to-assign"],
+    [
+      "react-intl",
+      {
+        "messagesDir": "./app/i18n/",
+        "enforceDescriptions": true
+      }
+    ]
+  ]
+}

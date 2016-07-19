@@ -1,4 +1,7 @@
-// import fetch from 'isomorphic-fetch';
+import fetch from 'isomorphic-fetch';
+
+export const SELECT_INTERESTS = 'SELECT_INTERESTS';
+export const DESELECT_INTERESTS = 'DESELECT_INTERESTS';
 
 export const REQUEST_INTERESTS = 'REQUEST_INTERESTS';
 export const RECEIVE_INTERESTS = 'RECEIVE_INTERESTS';
@@ -6,21 +9,52 @@ export const RECEIVE_INTERESTS = 'RECEIVE_INTERESTS';
 export const REQUEST_CAREERS = 'REQUEST_CAREERS';
 export const RECEIVE_CAREERS = 'RECEIVE_CAREERS';
 
-export const REQUEST_CAREER = 'REQUEST_CAREER';
-export const RECEIVE_CAREER = 'RECEIVE_CAREER';
+export const REQUEST_CAREER_DATA = 'REQUEST_CAREER_DATA';
+export const RECEIVE_CAREER_DATA = 'RECEIVE_CAREER_DATA';
 
-// TEMP DATA
-const INTEREST_DATA = [
-  { id: 'interest1', name: 'Gaming' },
-  { id: 'interest2', name: 'Baking' },
-  { id: 'interest3', name: 'Swimming' }
-];
-const CAREER_DATA = [
-  { id: 'career1', name: 'Biologist' },
-  { id: 'career2', name: 'Molecular Biologist' },
-  { id: 'career3', name: 'Biochemical Engineer' },
-  { id: 'career4', name: 'Biomechanical Engineer' }
-];
+const ENDPOINT = "https://aum42oxtch.execute-api.us-west-2.amazonaws.com/techstage";
+const INTERESTS_PATH = "/interests";
+const CAREERS_PATH = "/careers";
+
+const SPECIFIC_CAREER_DATA = {
+  id: 'career1',
+  name: 'Biologist',
+  roleModels: [
+    { id: 'roleModel1', name: 'Mary Poppins' }
+  ]
+};
+
+/**
+    Caching API responses
+**/
+
+function getInterestsId(interests) {
+  return interests.join(',');
+}
+
+// Lookup from list of interests to career objects
+var careersCache = {};
+function getCachedCareers(interests) {
+  return careersCache[getInterestsId(interests)];
+}
+function setCachedCareers(interests, careers) {
+  var interestsId = getInterestsId(interests);
+  careersCache[interestsId] = {
+    id: interestsId,
+    list: careers
+  };
+}
+
+// Lookup from careerId to careerData
+var careerDataCache = {};
+function getCachedCareerData(careerId) {
+  return careerDataCache[careerId];
+}
+function setCachedCareerData(careerId, careerData) {
+  careerData.id = careerId;
+  careerDataCache[careerId] = careerData;
+}
+
 
 /**
     Fetching Interests
@@ -35,32 +69,27 @@ export function requestInterests() {
 export function receiveInterests(interests) {
   return {
     type: RECEIVE_INTERESTS,
-    interests
+    data: interests
   };
 }
 
 function fetchInterests() {
   return dispatch => {
     dispatch(requestInterests());
-
-    let getData = new Promise(function (resolve) {
-      setTimeout(function () {
-        resolve(INTEREST_DATA);
-      }, 100);
-    });
-
-    return getData.then(interests => dispatch(receiveInterests(interests)));
-
-    // return fetch('<insert-url>')
-    //   .then(response => response.json())
-    //   .then(json => dispatch(receiveInterests(json)));
+    return fetch(ENDPOINT + INTERESTS_PATH)
+      .then(response => {
+        if (response.status !== 200) { throw "Unexpected Response: ", + response.status; }
+        return response.json();
+      })
+      .then(json => dispatch(receiveInterests(json)));
   };
 }
 
 // Public API
 export function getInterests() {
   return (dispatch, getState) => {
-    if (!getState().interests) {
+    var interests = getState().interests;
+    if (!interests || !interests.data) {
       return dispatch(fetchInterests());
     }
   };
@@ -70,32 +99,106 @@ export function getInterests() {
     Fetching Careers based on interests
 **/
 
-export function requestCareers(interests) {
+export function requestCareers() {
   return {
-    type: REQUEST_CAREERS,
-    interests: interests
+    type: REQUEST_CAREERS
   };
 }
 
-export function receiveCareers(interests, careers) {
+export function receiveCareers(careers) {
   return {
     type: RECEIVE_CAREERS,
-    interests: interests,
-    careers: careers
+    data: careers
   };
 }
 
 function fetchCareers(interests) {
   return dispatch => {
-    dispatch(requestCareers(interests));
+
+    // See if we already have a cached response:
+    function returnCachedData() {
+      var cache = getCachedCareers(interests);
+      if (cache) {
+        dispatch(receiveCareers(cache));
+        return true;
+      }
+    }
+    if (returnCachedData()) {
+      return Promise.resolve();
+    }
+
+    // Otherwise, need to fetch from server
+    dispatch(requestCareers());
+
+    return fetch(ENDPOINT + CAREERS_PATH + '?interest=' + encodeURIComponent(interests[0]))
+      .then(response => {
+        if (response.status !== 200) { throw "Unexpected Response: ", + response.status; }
+        return response.json();
+      })
+      .then(json => json.careers ? json.careers.map(elem => ({ name: elem, id: elem })) : [])
+      .then(careers => {
+        setCachedCareers(interests, careers);
+        returnCachedData();
+      });
+  };
+}
+
+// Public API
+export function getCareers() {
+  return (dispatch, getState) => {
+    var interests = (getState().interests && getState().interests.selected) || [];
+    var careers = getState().careers;
+    if (!careers || careers.id !== getInterestsId(interests)) {
+      return dispatch(fetchCareers(interests));
+    }
+  };
+}
+
+/**
+    Fetching Data for a particular career
+**/
+
+export function requestCareerData() {
+  return {
+    type: REQUEST_CAREER_DATA
+  };
+}
+
+export function receiveCareerData(careerData) {
+  return {
+    type: RECEIVE_CAREERS,
+    data: careerData
+  };
+}
+
+function fetchCareerData(careerId) {
+  return dispatch => {
+
+    // See if we already have a cached response:
+    function returnCachedData() {
+      var cache = getCachedCareerData(careerId);
+      if (cache) {
+        dispatch(receiveCareerData(cache));
+        return true;
+      }
+    }
+    if (returnCachedData()) {
+      return Promise.resolve();
+    }
+
+    // Otherwise, we need to fetch from the server
+    dispatch(requestCareerData());
 
     let getData = new Promise(function (resolve) {
       setTimeout(function () {
-        resolve(CAREER_DATA);
+        resolve(SPECIFIC_CAREER_DATA);
       }, 100);
     });
 
-    return getData.then(careers => dispatch(receiveCareers(interests, careers)));
+    return getData.then(careerData => {
+      setCachedCareerData(careerId, careerData);
+      returnCachedData();
+    });
 
     // return fetch('<insert-url>')
     //   .then(response => response.json())
@@ -104,11 +207,52 @@ function fetchCareers(interests) {
 }
 
 // Public API
-export function getCareers(interests) {
+export function getCareerData(careerId) {
   return (dispatch, getState) => {
-    var careers = getState().careers;
-    if (!careers[interests.join(',')]) {
-      return dispatch(fetchCareers(interests));
+    var careerData = getState().careerData;
+    if (!careerData || careerData.careerId !== careerId) {
+      return dispatch(fetchCareerData(careerId));
     }
+  };
+}
+
+
+
+
+
+/**
+    Initialising state
+**/
+
+export function selectInterests(interestIds) {
+  return {
+    type: SELECT_INTERESTS,
+    ids: interestIds
+  };
+}
+
+export function deselectInterests(interestIds) {
+  return {
+    type: DESELECT_INTERESTS,
+    ids: interestIds
+  };
+}
+
+export function initState(query) {
+  return dispatch => {
+    var interestIds = query.interests ? query.interests.split(',') : [];
+
+    return dispatch(getInterests())
+      .then(() => dispatch(selectInterests(interestIds)))
+      .then(() => {
+        if (interestIds.length >= 3) {
+          return dispatch(getCareers());
+        }
+      })
+      .then(() => {
+        if (query.career) {
+          return dispatch(getCareerData(query.career));
+        }
+      });
   };
 }

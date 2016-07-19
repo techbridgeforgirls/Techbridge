@@ -27,7 +27,7 @@ export class App extends React.Component {
     return(
       <IntlProvider locale="en" messages={localizedStrings}>
         <div id="tg-appContainer">
-          <Header/>
+          <Header location={this.props.location}/>
           {this.props.children}
         </div>
       </IntlProvider>
@@ -37,7 +37,9 @@ export class App extends React.Component {
 
 App.propTypes = {
   app: React.PropTypes.object,
-  children: React.PropTypes.object
+  children: React.PropTypes.object,
+  location: React.PropTypes.object,
+  route: React.PropTypes.object
 };
 
 export default connect((state) => ({

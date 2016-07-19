@@ -1,0 +1,17 @@
+[
+  {
+    "id": "app.home.iHeartInterests",
+    "description": "List of user liked interests",
+    "defaultMessage": "I {heart} {interest1} {interest2} {interest3}"
+  },
+  {
+    "id": "app.home.whatYouLove",
+    "description": "What you love header",
+    "defaultMessage": "WHAT DO YOU LOVE?"
+  },
+  {
+    "id": "app.home.continue",
+    "description": "Continue button",
+    "defaultMessage": "{arrow}"
+  }
+]

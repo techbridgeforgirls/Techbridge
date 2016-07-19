@@ -1,0 +1,15 @@
+{
+  "extends": "./.eslintrc-common",
+  "env": {
+    "node": true
+  },
+  "globals": {
+    "node": true
+  },
+  "rules": {
+    "handle-callback-err": 2,
+    "no-case-declarations": 1,
+    "no-console": 0,
+    "no-unused-vars": 1
+  }
+}

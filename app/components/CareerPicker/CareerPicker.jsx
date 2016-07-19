@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { FormattedMessage, defineMessages } from 'react-intl';
 import { Link } from 'react-router';
 import { InterestList } from '../InterestList/InterestList';
-import { getCareers } from '../../actions/apiActions';
+// import { initState } from '../../actions/apiActions';
 
 const messages = defineMessages({
   iCouldBeA: {
@@ -25,17 +25,18 @@ class CareerPicker extends React.Component {
     super(props);
 
     // TOFIX: Splitting and joining of the params is ugly
-    this.state = {
-      interests: this.props.params.interests.split(',')
-    };
+    // this.props.dispatch(initState(this.props.params));
   }
   componentDidMount() {
     // Request the careers (this will trigger a render when the global state changes)
-    this.props.dispatch(getCareers(this.state.interests));
+    // this.props.dispatch(getCareers());
+
+    // TOFIX: App should do this
+    // this.props.dispatch(initState(this.props.params));
   }
   render() {
 
-    var careers = this.props.careers[this.props.params.interests] || {};
+    var careers = this.props.careers.data || {};
     var careerList = careers.list || [];
 
     // Construct the list of careers
@@ -53,7 +54,7 @@ class CareerPicker extends React.Component {
     return(
       <div id="tg-careerpicker">
         <div className="interest-list">
-          <InterestList interestList={this.state.interests}/>
+          <InterestList interestList={this.props.interests.selected}/>
         </div>
         <div className="icouldbea">
           <FormattedMessage {...messages.iCouldBeA}/>
@@ -67,6 +68,7 @@ class CareerPicker extends React.Component {
 CareerPicker.propTypes = {
   params: React.PropTypes.object,
   careers: React.PropTypes.object,
+  interests: React.PropTypes.object,
   dispatch: React.PropTypes.func
 };
 

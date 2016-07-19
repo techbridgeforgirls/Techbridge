@@ -1,15 +1,15 @@
 import {
-  REQUEST_CAREERS, RECEIVE_CAREERS
+  REQUEST_CAREER_DATA, RECEIVE_CAREER_DATA
 } from '../actions/apiActions';
 
 export default function careers(state = { }, action) {
   switch(action.type) {
-    case REQUEST_CAREERS:
+    case REQUEST_CAREER_DATA:
       return Object.assign({}, state, {
         isFetching: true
       });
 
-    case RECEIVE_CAREERS:
+    case RECEIVE_CAREER_DATA:
       return Object.assign({}, state, {
         isFetching: false,
         data: action.data

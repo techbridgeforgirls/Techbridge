@@ -1,0 +1,36 @@
+{
+  "extends": ["eslint:recommended", "plugin:import/errors", "plugin:import/warnings"],
+
+  "env": {
+    "es6": true
+  },
+
+  "parser": "babel-eslint",
+
+  "parserOptions": {
+    "ecmaVersion": 6,
+    "sourceType": "module",
+    "ecmaFeatures": {
+      "jsx": true
+    }
+  },
+
+  "plugins": [
+    "import",
+    "react"
+  ],
+
+  "rules": {
+    "object-curly-spacing": [1, "always"],
+    "semi": [1, "always"],
+    'import/no-unresolved': 0,
+    'import/named': 1,
+    'import/namespace': 1,
+    'import/default': 1,
+    'import/export': 1,
+    'import/no-commonjs': 1,
+    'import/imports-first': 1,
+    "react/jsx-uses-react": 1,
+    "react/jsx-uses-vars": 1,
+  }
+}

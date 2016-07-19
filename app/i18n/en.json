@@ -8,5 +8,8 @@
   "app.career.collegesTitle": "Colleges To Visit",
   "app.careerPicker.iCouldBeA": "I could be a...",
   "app.header.iLoveStem": "I {heart} STEM",
+  "app.home.iHeartInterests": "I {heart} {interest1} {interest2} {interest3}",
+  "app.home.whatYouLove": "WHAT DO YOU LOVE?",
+  "app.home.continue": "{arrow}",
   "app.interestList.iHeartList": "I {heart} {interest1} {interest2} {interest3}"
 }

@@ -1,0 +1,142 @@
+$tg-pink: #e8168b;
+$tg-blue: #35ACE1;
+$tg-yellow: #FFF035;
+$tg-font-size-love: 85px;
+$tg-font-size-header: 15px;
+$tg-font-size-interests: 25px;
+$tg-font-size-boxes: 35px;
+
+#tg-root {
+    max-width: 800px;
+    max-height: 600px;
+    float: center;
+    margin: 0 auto;
+    text-align: center;
+    vertical-align: middle;
+    width: 100%;
+
+    a {
+      text-decoration: none;
+    }
+
+    #tg-iHeartHeader {
+        font-size: $tg-font-size-love;
+        margin: 25px 20px;
+        float: center;
+        color: $tg-pink;
+        vertical-align: middle;
+
+        .glyphs {
+          vertical-align: middle;
+          color: $tg-pink;
+
+          .glyphs-arrow {
+              font-size: $tg-font-size-boxes;
+          }
+        }
+
+        .interestItemSelected {
+          display: inline-block;
+          min-width: 75px;
+          min-height: $tg-font-size-boxes;
+          float: center;
+          padding: 2px 20px;
+          background: $tg-pink;
+          color: #fff;
+          border-radius: 5px;
+          font-size: $tg-font-size-boxes;
+          vertical-align: middle;
+        }
+
+        .interestItem {
+            display: inline-block;
+            min-width: 75px;
+            min-height: $tg-font-size-boxes;
+            float: center;
+            padding: 2px 20px;
+            background: #fff;
+            color: $tg-pink;
+            border-radius: 5px;
+            font-size: $tg-font-size-boxes;
+            vertical-align: middle;
+        }
+
+        .continue {
+            display: inline-block;
+            min-width: 75px;
+            min-height: $tg-font-size-interests;
+            float: center;
+            padding: 2px 20px;
+            margin: 20px;
+            background: transparentize($tg-yellow, 1);
+            color: $tg-pink;
+            border-radius: 5px;
+            font-size: $tg-font-size-interests;
+            vertical-align: middle;
+        }
+    }
+
+    #tg-optionsHeader {
+        font-size: $tg-font-size-header;
+        color:$tg-pink;
+        padding: 5px 20px;
+        float: left;
+        overflow: hidden;
+        margin-top: 25px;
+    }
+
+    #tg-optionsList {
+        color:$tg-blue;
+        font-size: $tg-font-size-interests;
+        float: left;
+        overflow: auto;
+
+        .optionButton {
+            background: transparentize($tg-yellow, 1);
+            vertical-align: middle;
+            color: $tg-blue,
+        }
+
+        .optionButtonSelected {
+            background: $tg-blue;
+            color: #fff;
+            vertical-align: middle;
+            border-radius: 5px;
+            padding: 5px 5px;
+
+            .glyphs {
+                vertical-align: middle;
+                color: #fff
+            }
+        }
+
+        .glyphs {
+          vertical-align: middle;
+          color: $tg-blue;
+        }
+
+        table {
+            table-layout: fixed;
+            max-width: 800px;
+            overflow-x: scroll;
+            white-space: nowrap;
+            display: block;
+
+            th, td {
+                border: 1px solid transparentize($tg-yellow, 1);;
+                border-collapse: collapse;
+                padding: 15px;
+                text-align: left;
+                border-spacing: 5px;
+            }
+        }
+    }
+
+    ::-webkit-scrollbar {
+        width: 0px;
+        background: transparentize($tg-yellow, 1);
+    }
+    ::-webkit-scrollbar-thumb {
+        background: transparentize($tg-yellow, 1);
+    }
+}

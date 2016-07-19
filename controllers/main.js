@@ -7,6 +7,7 @@ import { createMemoryHistory, useQueries } from 'history';
 import { Provider } from 'react-redux';
 import * as reducers from '../app/reducers';
 import createRoutes from '../app/routes/index';
+import { initState } from '../app/actions/apiActions';
 
 // Combine all of our reducers
 const reducer = combineReducers(reducers);
@@ -22,12 +23,15 @@ export default function(app) {
       });
     }
 
-    let fullApp = ReactDOMServer.renderToString(
-      <Provider store={store}>
-        { <RouterContext {...renderProps}/> }
-      </Provider>
-    );
-    return fullApp;
+    // Initialise the state of the app, based on query parameters
+    return store.dispatch(initState(req.query || {})).then(() => {
+      let fullApp = ReactDOMServer.renderToString(
+        <Provider store={store}>
+          { <RouterContext {...renderProps}/> }
+        </Provider>
+      );
+      return fullApp;
+    });
   };
 
   // Setup the wildcard route
@@ -45,11 +49,19 @@ export default function(app) {
       } else {
         // Setup the Redux store
         const store = createStore(reducer, { }, applyMiddleware(thunkMiddleware));
-        let appComponent = prepareAppHelper(store, req, renderProps);
-        let curState = store.getState();
-        let lang = curState && curState.app && curState.app.language;
 
-        res.render('main.hbs', { layout: 'page', initialState: JSON.stringify(store.getState()), content: appComponent, jsUrl: '/js/app.js', lang: lang });
+        prepareAppHelper(store, req, renderProps).then(appComponent => {
+          let curState = store.getState();
+          let lang = curState && curState.app && curState.app.language;
+
+          res.render('main.hbs', {
+            layout: 'page',
+            initialState: JSON.stringify(store.getState()),
+            content: appComponent,
+            jsUrl: '/js/app.js',
+            lang: lang
+          });
+        });
       }
     });
   });
