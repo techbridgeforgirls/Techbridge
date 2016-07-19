@@ -5,7 +5,7 @@
   "main": "index.js",
   "repository": {
     "type": "git",
-    "url": "https://github.com/techbridgeforgirls/techbridge"
+    "url": "https://git.corp.adobe.com/jmitchel/rolemodels"
   },
   "scripts": {
     "start": "node index.js",

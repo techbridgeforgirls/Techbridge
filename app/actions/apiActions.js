@@ -15,14 +15,7 @@ export const RECEIVE_CAREER_DATA = 'RECEIVE_CAREER_DATA';
 const ENDPOINT = "https://aum42oxtch.execute-api.us-west-2.amazonaws.com/techstage";
 const INTERESTS_PATH = "/interests";
 const CAREERS_PATH = "/careers";
-
-const SPECIFIC_CAREER_DATA = {
-  id: 'career1',
-  name: 'Biologist',
-  roleModels: [
-    { id: 'roleModel1', name: 'Mary Poppins' }
-  ]
-};
+const ROLEMODEL_PATH = "/rolemodels";
 
 /**
     Caching API responses
@@ -92,6 +85,7 @@ export function getInterests() {
     if (!interests || !interests.data) {
       return dispatch(fetchInterests());
     }
+    return Promise.resolve();
   };
 }
 
@@ -151,6 +145,7 @@ export function getCareers() {
     if (!careers || careers.id !== getInterestsId(interests)) {
       return dispatch(fetchCareers(interests));
     }
+    return Promise.resolve();
   };
 }
 
@@ -189,20 +184,16 @@ function fetchCareerData(careerId) {
     // Otherwise, we need to fetch from the server
     dispatch(requestCareerData());
 
-    let getData = new Promise(function (resolve) {
-      setTimeout(function () {
-        resolve(SPECIFIC_CAREER_DATA);
-      }, 100);
-    });
-
-    return getData.then(careerData => {
-      setCachedCareerData(careerId, careerData);
-      returnCachedData();
-    });
-
-    // return fetch('<insert-url>')
-    //   .then(response => response.json())
-    //   .then(json => dispatch(receiveInterests(json)));
+    return fetch(ENDPOINT + ROLEMODEL_PATH + '?career=' + encodeURIComponent(careerId))
+      .then(response => response.json())
+      .then(careerData => {
+        var rolemodels = careerData.rolemodels;
+        rolemodels.forEach(function (rolemodel) {
+          rolemodel.id = rolemodel.firstname + rolemodel.lastname;
+        });
+        setCachedCareerData(careerId, rolemodels);
+        returnCachedData();
+      });
   };
 }
 
@@ -213,6 +204,7 @@ export function getCareerData(careerId) {
     if (!careerData || careerData.careerId !== careerId) {
       return dispatch(fetchCareerData(careerId));
     }
+    return Promise.resolve();
   };
 }
 

@@ -15,29 +15,50 @@ import CareerPicker from '../components/CareerPicker/CareerPicker';
 import { Career } from '../components/Career/Career';
 import { Stars } from '../components/Stars/Stars';
 
-export default function(history) {
+// Actions
+import { initState } from '../actions/apiActions';
+
+
+export default function(history, store) {
+
+  function onEnterRoute(nextState, replace) {
+    // Make sure the query data is consistent with the state
+    var interests = store.getState().interests;
+    var interestList = interests && interests.selected && interests.selected.join(',');
+    if (interestList && !nextState.location.query.interests) {
+      var newQuery = Object.assign({ }, nextState.location.query, { interests: interestList });
+      replace({
+        pathname: nextState.location.pathname,
+        query: newQuery
+      });
+    }
+
+    // We make sure the state in the store matches the query parameters
+    store.dispatch(initState(nextState.location.query));
+  }
+
   return (
     <Router history={history}>
-      <Route path="/" component={ App }>
+      <Route path="/" component={ App } onEnter={ onEnterRoute }>
         <IndexRoute component={ Home } />
       </Route>
-      <Route path="/careerpicker/:interests" component={ App }>
+      <Route path="/careerpicker" component={ App } onEnter={ onEnterRoute }>
         <IndexRoute component={ CareerPicker } />
       </Route>
-      <Route path="/web" component={ App }>
+      <Route path="/web" component={ App } onEnter={ onEnterRoute }>
         <IndexRoute component={ Web } />
       </Route>
-      <Route path="/video" component={ App }>
+      <Route path="/video" component={ App } onEnter={ onEnterRoute }>
         <IndexRoute component={ Video } />
       </Route>
-      <Route path="/settings" component={ App }>
+      <Route path="/settings" component={ App } onEnter={ onEnterRoute }>
         <IndexRoute component={ Settings } />
       </Route>
-      <Route path="/career" component={ App }>
+      <Route path="/career" component={ App } onEnter={ onEnterRoute }>
         <IndexRoute component={ Career } />
       </Route>
       <Redirect from="stars" to="/" />
-      <Route path="/stars/:starId" component={ App }>
+      <Route path="/stars/:starId" component={ App } onEnter={ onEnterRoute }>
         <IndexRoute component={ Stars } />
       </Route>
       <Route path="*" component={ AppError }/>

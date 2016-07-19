@@ -3,7 +3,6 @@ import { connect } from 'react-redux';
 import { FormattedMessage, defineMessages } from 'react-intl';
 import { Link } from 'react-router';
 import { InterestList } from '../InterestList/InterestList';
-// import { initState } from '../../actions/apiActions';
 
 const messages = defineMessages({
   iCouldBeA: {
@@ -23,27 +22,20 @@ const careerPositions = [
 class CareerPicker extends React.Component {
   constructor(props) {
     super(props);
-
-    // TOFIX: Splitting and joining of the params is ugly
-    // this.props.dispatch(initState(this.props.params));
-  }
-  componentDidMount() {
-    // Request the careers (this will trigger a render when the global state changes)
-    // this.props.dispatch(getCareers());
-
-    // TOFIX: App should do this
-    // this.props.dispatch(initState(this.props.params));
   }
   render() {
+    var location = this.props.location;
 
     var careers = this.props.careers.data || {};
     var careerList = careers.list || [];
+
+    var interestsList = this.props.interests.selected;
 
     // Construct the list of careers
     var careerElements = [];
     careerList.forEach(function (career, index) {
         careerElements.push(
-          <Link to={'/career'} key={career.id}>
+          <Link to={{ pathname: '/career', query: Object.assign({ }, location.query, { career: career.id }) }} key={career.id}>
             <div className="career-circle" style={careerPositions[index]}>
               <span className="career-circle-text">{career.name}</span>
             </div>
@@ -54,7 +46,7 @@ class CareerPicker extends React.Component {
     return(
       <div id="tg-careerpicker">
         <div className="interest-list">
-          <InterestList interestList={this.props.interests.selected}/>
+          <InterestList interestList={interestsList}/>
         </div>
         <div className="icouldbea">
           <FormattedMessage {...messages.iCouldBeA}/>
@@ -69,6 +61,7 @@ CareerPicker.propTypes = {
   params: React.PropTypes.object,
   careers: React.PropTypes.object,
   interests: React.PropTypes.object,
+  location: React.PropTypes.object,
   dispatch: React.PropTypes.func
 };
 

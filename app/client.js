@@ -13,7 +13,7 @@ const store = createStore(reducer, initialState, applyMiddleware(thunkMiddleware
 
 render(
   <Provider store={ store }>
-    { createRoutes(browserHistory) }
+    { createRoutes(browserHistory, store) }
   </Provider>,
   document.getElementById('tg-mainContainer')
 );

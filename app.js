@@ -26,8 +26,4 @@ main(app);
 let server = http.createServer(app);
 
 // Listen on the specified port
-//server.listen(8080, () => console.log(`Server started at ${server.address().port}`)); // eslint-disable-line no-console
-//app.listen(process.env.PORT || 3000, function(){
-//  console.log("Express server listening on port %d in %s mode", this.address().port, app.settings.env);
-//});
 server.listen(process.env.PORT || 8080, () => console.log(`Server started at ${server.address().port}`)); // eslint-disable-line no-console

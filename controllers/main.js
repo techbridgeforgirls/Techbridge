@@ -36,8 +36,11 @@ export default function(app) {
 
   // Setup the wildcard route
   app.get('*', (req, res) => {
+    // Setup the Redux store
+    const store = createStore(reducer, { }, applyMiddleware(thunkMiddleware));
+
     let history = useRouterHistory(useQueries(createMemoryHistory))();
-    let routes = createRoutes(history);
+    let routes = createRoutes(history, store);
     let location = history.createLocation(req.url);
     match({ routes, location }, (error, redirectLocation, renderProps) => {
       if (redirectLocation) {
@@ -47,9 +50,6 @@ export default function(app) {
       } else if (renderProps == null) {
         res.status(404).send('Not found');
       } else {
-        // Setup the Redux store
-        const store = createStore(reducer, { }, applyMiddleware(thunkMiddleware));
-
         prepareAppHelper(store, req, renderProps).then(appComponent => {
           let curState = store.getState();
           let lang = curState && curState.app && curState.app.language;
