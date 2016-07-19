@@ -40,7 +40,7 @@ const paths = {
 
 const bundles = [{
   bundleFile: 'app.js',
-  srcJsx: 'app/client.js'
+  srcJsx: 'app/client.jsx'
 }, {
   bundleFile: 'error.js',
   srcJsx: 'app/components/AppError/AppError.jsx'
