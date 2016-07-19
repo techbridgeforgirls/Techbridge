@@ -1,5 +1,8 @@
 import React from 'react';
 import { FormattedMessage, defineMessages } from 'react-intl';
+import { connect } from 'react-redux';
+import { Link } from 'react-router';
+import { selectInterests, deselectInterests } from '../../actions/apiActions.js';
 
 const messages = defineMessages({
     iHeartInterests: {
@@ -22,6 +25,7 @@ const messages = defineMessages({
 });
 
 const glyph = <span className="glyphs">&#57344;</span>;
+const maxOptions = 3;
 
 export class Home extends React.Component {
     handleClick() {
@@ -31,90 +35,73 @@ export class Home extends React.Component {
     render() {
         return (
             <div id="tg-root">
-                <div id="tg-iHeartHeader">
-                    <InterestsList/>
+                <div id="tg-selectedInterests">
+                    <SelectedInterests interests={this.props.interests} dispatch={this.props.dispatch}/>
                 </div>
                 <div>
                     <span>&nbsp;</span>
-                    <InterestOptions/>
+                    <InterestOptionsList interests={this.props.interests} dispatch={this.props.dispatch}/>
                 </div>
             </div>
         );
     }
 }
 
-var InterestsList = React.createClass({
+Home.propTypes = {
+    interests: React.PropTypes.object,
+    dispatch: React.PropTypes.func
+};
+
+export default connect((state) => ({
+  interests: state.interests
+}))(Home);
+
+var SelectedInterests = React.createClass({ /**!**/ //needs to be completely reworked to properly wire in with the prop
     propTypes: {
-        interestList: React.PropTypes.array,
-        itemsSelected: React.PropTypes.number
+        interests: React.PropTypes.object
     },
-    getDefaultProps: function() {
-        return {
-          interestList: ['', '', ''],
-          itemsSelected: 0
-        };
-    },
+
     render() {
         let heart = glyph;
-        let interest1 = '';
-        let interest2 = '';
-        let interest3 = '';
+        let interest = [];
 
-        var isSelected = function (item) {
-            if (item.length > 0) {
-                return "interestItemSelected";
+        for (var i = 0; i < maxOptions; i++) {
+            var interestItem = this.props.interests.selected[i];
+            if(interestItem) {
+                interest[i] = <span className='interestItemSelected'>{interestItem}</span>;
+            } else {
+                interest[i] = <span className='interestItem'>{interestItem}</span>;
             }
-            return "interestItem";
-        };
-
-        if (this.props.interestList) {
-          if (this.props.interestList.length > 0) {
-            var interestItem1 = this.props.interestList[0];
-            interest1 = <span className= {isSelected(interestItem1)}>{interestItem1}</span>;
-          }
-          if (this.props.interestList.length > 1) {
-            var interestItem2 = this.props.interestList[1];
-            interest2 = <span className= {isSelected(interestItem2)}>{interestItem2}</span>;
-          }
-          if (this.props.interestList.length > 2) {
-            var interestItem3 = this.props.interestList[2];
-            interest3 = <span className= {isSelected(interestItem3)}>{interestItem3}</span>;
-          }
         }
 
         let strVals = {
           heart: heart,
-          interest1: interest1,
-          interest2: interest2,
-          interest3: interest3
+          interest1: interest[0],
+          interest2: interest[1],
+          interest3: interest[2]
         };
 
         return(
-          <div id="tg-iHeartHeader">
+          <div id="tg-selectedInterests">
             <FormattedMessage {...messages.iHeartInterests} values={strVals}/>
           </div>
         );
     }
 });
 
-var InterestOptions = React.createClass({
+var InterestOptionsList = React.createClass({
     propTypes: {
-        interestOptions: React.PropTypes.array
-    },
-    getDefaultProps: function() {
-        return {
-          interestOptions: ['Technology', 'Animals', 'Experiments', 'Art', 'Baking', 'Sports', 'Food', 'Games', 'Music', 'Nature', 'Movies', 'Singing', 'Math', 'Computers', 'Science']
-        };
-    },
-    getInitialState: function() {
-        return { isSelected: false };
+        interests: React.PropTypes.object,
+        dispatch: React.PropTypes.func
     },
 
-    handleClick(selectedOption) {
-        // console.log("hit");
-        this.setState({ isSelected: !this.state.isSelected });
-        InterestsList.props.interestList[InterestsList.props.itemsSelected](selectedOption);
-        InterestsList.props.itemsSelected += 1;
+    handleClick(interest) {
+        interest['selected'] = !interest['selected'];
+        if (interest['selected'] && this.props.interests.selected.length < 3) {
+            this.props.dispatch(selectInterests([interest.id]));
+        } else if (!interest['selected']) {
+            this.props.dispatch(deselectInterests([interest.id]));
+        }
     },
 
     render() {
@@ -125,25 +112,31 @@ var InterestOptions = React.createClass({
             return "optionButton";
         };
 
-        var tableData = this.props.interestOptions;
+        var selectedData = this.props.interests.selected;
+        var tableData = this.props.interests.data.map(function (interest){
+            interest['selected'] = selectedData.indexOf(interest.id) >= 0 ? true : false;
+            return interest;
+        });
+
         var rows = [];
         var colMax = Math.ceil(tableData.length / 3.0);
         for (var i = 0; i < tableData.length; i+=colMax) {
             var row = [];
             for (var n = i; n < i + colMax; n++) {
                 if (tableData[n]) {
-                    row.push(<td key={tableData[n]}><span className={isSelected(this.state.isSelected)} onClick={this.handleClick.bind(this, tableData[n])}>{glyph} {tableData[n]}</span></td>);
+                    row.push(<td key={tableData[n].id}><span className={isSelected(tableData[n].selected)} onClick={this.handleClick.bind(this, tableData[n])}>{glyph} {tableData[n].name}</span></td>);
                 }
             }
             rows.push(<tr key={i}>{row}</tr>);
         }
+
         return(
             <div>
-                <div id="tg-optionsHeader">
+                <div id="tg-interestOptionsListHeader">
                     <FormattedMessage {...messages.whatYouLove}/>
                 </div>
-                <div id="tg-optionsList">
-                    <table id="interestTable">
+                <div id="tg-interestOptionsList">
+                    <table id="interestsListTable">
                         <tbody>
                             {rows}
                         </tbody>
@@ -153,4 +146,3 @@ var InterestOptions = React.createClass({
         );
     }
 });
-

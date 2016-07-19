@@ -161,7 +161,7 @@ export function requestCareerData() {
 
 export function receiveCareerData(careerData) {
   return {
-    type: RECEIVE_CAREERS,
+    type: RECEIVE_CAREER_DATA,
     data: careerData
   };
 }
@@ -191,7 +191,7 @@ function fetchCareerData(careerId) {
         rolemodels.forEach(function (rolemodel) {
           rolemodel.id = rolemodel.firstname + rolemodel.lastname;
         });
-        setCachedCareerData(careerId, rolemodels);
+        setCachedCareerData(careerId, careerData);
         returnCachedData();
       });
   };

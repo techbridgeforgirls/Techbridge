@@ -7,12 +7,12 @@ import App from '../components/App/App';
 import AppError from '../components/AppError/AppError';
 
 // Pages
-import { Home } from '../components/Home/Home';
+import  Home  from '../components/Home/Home';
 import { Web } from '../components/Web/Web';
 import { Video } from '../components/Video/Video';
 import { Settings } from '../components/Settings/Settings';
 import CareerPicker from '../components/CareerPicker/CareerPicker';
-import { Career } from '../components/Career/Career';
+import Career from '../components/Career/Career';
 import { Stars } from '../components/Stars/Stars';
 
 // Actions

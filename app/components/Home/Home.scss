@@ -1,7 +1,7 @@
 $tg-pink: #e8168b;
 $tg-blue: #35ACE1;
 $tg-yellow: #FFF035;
-$tg-font-size-love: 85px;
+$tg-font-size-love: 75px;
 $tg-font-size-header: 15px;
 $tg-font-size-interests: 25px;
 $tg-font-size-boxes: 35px;
@@ -12,40 +12,28 @@ $tg-font-size-boxes: 35px;
     float: center;
     margin: 0 auto;
     text-align: center;
-    vertical-align: middle;
     width: 100%;
 
     a {
       text-decoration: none;
     }
 
-    #tg-iHeartHeader {
+    #tg-selectedInterests {
         font-size: $tg-font-size-love;
         margin: 25px 20px;
         float: center;
         color: $tg-pink;
+        text-align: center;
         vertical-align: middle;
 
         .glyphs {
-          vertical-align: middle;
+        //   vertical-align: middle;
           color: $tg-pink;
+          font-size: $tg-font-size-love + 10px;
 
           .glyphs-arrow {
               font-size: $tg-font-size-boxes;
           }
-        }
-
-        .interestItemSelected {
-          display: inline-block;
-          min-width: 75px;
-          min-height: $tg-font-size-boxes;
-          float: center;
-          padding: 2px 20px;
-          background: $tg-pink;
-          color: #fff;
-          border-radius: 5px;
-          font-size: $tg-font-size-boxes;
-          vertical-align: middle;
         }
 
         .interestItem {
@@ -53,12 +41,31 @@ $tg-font-size-boxes: 35px;
             min-width: 75px;
             min-height: $tg-font-size-boxes;
             float: center;
+            border-radius: 5px;
+            font-size: $tg-font-size-boxes;
+
             padding: 2px 20px;
             background: #fff;
             color: $tg-pink;
+            margin: 10px 0px;
+        }
+
+        .interestItemSelected {
+            display: inline-block;
+            min-width: 75px;
+            max-height: $tg-font-size-boxes;
+            line-height: $tg-font-size-boxes;
+            float: center;
             border-radius: 5px;
             font-size: $tg-font-size-boxes;
-            vertical-align: middle;
+
+            padding: 5px;
+            // padding-bottom: 10px;
+            background: $tg-pink;
+            color: #fff;
+            margin: 0px 0px;
+            margin-bottom: 50px;
+            // vertical-align: top;
         }
 
         .continue {
@@ -76,7 +83,7 @@ $tg-font-size-boxes: 35px;
         }
     }
 
-    #tg-optionsHeader {
+    #tg-interestOptionsListHeader {
         font-size: $tg-font-size-header;
         color:$tg-pink;
         padding: 5px 20px;
@@ -85,7 +92,7 @@ $tg-font-size-boxes: 35px;
         margin-top: 25px;
     }
 
-    #tg-optionsList {
+    #tg-interestOptionsList {
         color:$tg-blue;
         font-size: $tg-font-size-interests;
         float: left;

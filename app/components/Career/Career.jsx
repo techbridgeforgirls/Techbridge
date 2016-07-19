@@ -1,4 +1,5 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import { FormattedMessage, defineMessages } from 'react-intl';
 import { InterestList } from '../InterestList/InterestList';
 import { Link } from 'react-router';
@@ -31,9 +32,60 @@ const messages = defineMessages({
   }
 });
 
+const CLASS_FIELDS = ['classestotake1', 'classestotake2', 'classestotake3'];
+const COLLEGE_FIELDS = ['collegestovisit1', 'collegestovisit2', 'collegestovisit3'];
+const SKILL_FIELDS = ['canhelppeople1', 'canhelppeople2', 'canhelppeople3'];
+
 export class Career extends React.Component {
+
+  getList(fields) {
+    var careerData = this.props.careerData;
+    var description = careerData && careerData.data && careerData.data.description[0];
+    var list = [];
+    fields.forEach(field => {
+      if (description && description[field]) {
+        list.push(description[field]);
+      }
+    });
+    return list;
+  }
+
+  getCareer() {
+    var careerData = this.props.careerData;
+    return careerData && careerData.data && careerData.data.career;
+  }
+
+  getVideos() {
+    var careerData = this.props.careerData;
+    var description = careerData && careerData.data && careerData.data.description[0];
+    if (description) {
+      return [{
+        title: description.videotitle,
+        url: description.video
+      }];
+    }
+    return [];
+  }
+
+  getRoleModels() {
+    var careerData = this.props.careerData;
+    var roleModels = careerData && careerData.data && careerData.data.rolemodels;
+    var list = [];
+    if (roleModels) {
+      roleModels.forEach((roleModel, index) => {
+        list.push({
+          id: roleModel.id,
+          img: roleModel.image + '?cachebuster=' + index,
+          name: roleModel.firstname + ' ' + roleModel.lastname,
+          title: roleModel.jobtitle
+        });
+      });
+    }
+    return list;
+  }
+
   getClassList() {
-    let classes = this.props.classes.map(function(curClass, index) {
+    let classes = this.getList(CLASS_FIELDS).map(function(curClass, index) {
       return (<li key={'class-'+index}>{curClass}</li>);
     });
     return (<div>
@@ -43,8 +95,8 @@ export class Career extends React.Component {
   }
 
   getVideoList() {
-    let videos = this.props.videos.map(function(curVideo, index) {
-      return (<li key={'video-'+index}>{curVideo}</li>);
+    let videos = this.getVideos().map(function(curVideo, index) {
+      return (<li key={'video-'+index}>{curVideo.title}</li>);
     });
     return (<div>
       <h4 className="listTitle"><FormattedMessage {...messages.videosTitle}/></h4>
@@ -53,7 +105,7 @@ export class Career extends React.Component {
   }
 
   getCollegeList() {
-    let colleges = this.props.colleges.map(function(curCollege, index) {
+    let colleges = this.getList(COLLEGE_FIELDS).map(function(curCollege, index) {
       return (<li key={'college-'+index}>{curCollege}</li>);
     });
     return (<div>
@@ -63,14 +115,17 @@ export class Career extends React.Component {
   }
 
   render() {
-    let skills = this.props.skills.map(function(skill, index) {
+    var location = this.props.location;
+    var interestsList = this.props.interests.selected;
+
+    let skills = this.getList(SKILL_FIELDS).map(function(skill, index) {
       return (<li key={'skill-'+index}>{skill}</li>);
     });
 
-    let stars = this.props.stars.map(function(star, index) {
-      let url = '/stars/'+star.id;
-      return (<li key={'star-'+index}>
-        <Link to={url}>
+    let stars = this.getRoleModels().map(function(star, index) {
+      let url = '/stars/' + star.id;
+      return (<li key={'star-' + index}>
+        <Link to={{ pathname: url, query: location.query }}>
           <img src={star.img}/>
           <div className="tg-starDetail">
             <div className="glyphs">&#57349;</div>
@@ -82,25 +137,19 @@ export class Career extends React.Component {
     });
 
     let lists = [];
-    if (this.props.classes && this.props.classes.length) {
-      lists.push(<li className="list" key="list-classes">{this.getClassList()}</li>);
-    }
-    if (this.props.videos && this.props.videos.length) {
-      lists.push(<li className="list" key="list-videos">{this.getVideoList()}</li>);
-    }
-    if (this.props.colleges && this.props.colleges.length) {
-      lists.push(<li className="list" key="list-colleges">{this.getCollegeList()}</li>);
-    }
+    lists.push(<li className="list" key="list-classes">{this.getClassList()}</li>);
+    lists.push(<li className="list" key="list-videos">{this.getVideoList()}</li>);
+    lists.push(<li className="list" key="list-colleges">{this.getCollegeList()}</li>);
 
     return(
       <div id="tg-career">
         <div>
-          <InterestList componentStyle={{ display: 'inline-block' }}/>
-          <div className="tg-careerHeader">/ {this.props.careerTitle}</div>
+          <InterestList interestList={interestsList} componentStyle={{ display: 'inline-block' }}/>
+          <div className="tg-careerHeader">/ {this.getCareer()}</div>
         </div>
         <div className="tg-careerBody">
           <div className="tg-careerDetail">
-            <h3><FormattedMessage {...messages.helpPeople} values={{ title: this.props.careerTitle }}/></h3>
+            <h3><FormattedMessage {...messages.helpPeople} values={{ title: this.getCareer() }}/></h3>
             <ul>{skills}</ul>
           </div>
           <div className="tg-starList">
@@ -115,30 +164,32 @@ export class Career extends React.Component {
 }
 
 Career.propTypes = {
-  classes: React.PropTypes.array,
-  videos: React.PropTypes.array,
-  colleges: React.PropTypes.array,
-  careerTitle: React.PropTypes.string,
-  skills: React.PropTypes.array,
-  stars: React.PropTypes.array
+  interests: React.PropTypes.object,
+  careerData: React.PropTypes.object,
+  location: React.PropTypes.object
 };
 
-Career.defaultProps = {
-  careerTitle: 'Food Scientist',
-  classes: ['Chemistry', 'Biology', 'Cooking'],
-  videos: ['Science 360', 'Leaf Snap', 'Sugar Shake'],
-  colleges: ['Purdue', 'East Tennessee', 'UC Berkley'],
-  skills: ['by making foods healthy', 'by inventing new types of food and recipes'],
-  stars: [{
-    name: 'Katie',
-    title: 'Food Scientist',
-    img: 'http://medicalandhealthcare.com/wp-content/uploads/2015/10/Agricultural-and-Food-Scientist.jpg',
-    id: 1
-  },
-  {
-    name: 'Sarah',
-    title: 'College Student',
-    img: 'http://theglasshammer.com/wp-content/uploads/2015/03/girl-education.jpg',
-    id: 2
-  }]
-};
+// Career.defaultProps = {
+//   careerTitle: 'Food Scientist',
+//   classes: ['Chemistry', 'Biology', 'Cooking'],
+//   videos: ['Science 360', 'Leaf Snap', 'Sugar Shake'],
+//   colleges: ['Purdue', 'East Tennessee', 'UC Berkley'],
+//   skills: ['by making foods healthy', 'by inventing new types of food and recipes'],
+//   stars: [{
+//     name: 'Katie',
+//     title: 'Food Scientist',
+//     img: 'http://medicalandhealthcare.com/wp-content/uploads/2015/10/Agricultural-and-Food-Scientist.jpg',
+//     id: 1
+//   },
+//   {
+//     name: 'Sarah',
+//     title: 'College Student',
+//     img: 'http://theglasshammer.com/wp-content/uploads/2015/03/girl-education.jpg',
+//     id: 2
+//   }]
+// };
+
+export default connect((state) => ({
+  interests: state.interests,
+  careerData: state.careerData
+}))(Career);
