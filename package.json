@@ -8,11 +8,12 @@
   "main": "index.js",
   "repository": {
     "type": "git",
-    "url": "https://github.com/techbridgeforgirls"
+    "url": "https://github.com/techbridgeforgirls/techbridge"
   },
   "scripts": {
+    "postinstall": "bower install && grunt build",
     "start": "node index.js",
-    "postinstall": "gulp build",
+//    "postinstall": "gulp build",
     "lint": "gulp lintServer && gulp lintClient"
   },
   "author": "Adobe",
