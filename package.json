@@ -9,7 +9,7 @@
   },
   "scripts": {
     "start": "node index.js",
-    "build": "gulp build",
+    "postinstall": "gulp build",
     "lint": "gulp lintServer && gulp lintClient"
   },
   "engines": {
