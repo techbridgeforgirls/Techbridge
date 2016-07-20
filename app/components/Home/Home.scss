@@ -75,23 +75,22 @@ $tg-font-size-boxes: 35px;
           height: 400px;
         }
 
-        a {
-            border-radius: 25px;
-            display: inline-block;
-            height: 10px;
-            padding: 10px;
-            width: 10px;
-            font-size: 10px;
-            vertical-align: middle;
-            transform: rotate(270deg);
-
-            .glyphs {
-                vertical-align: top;
-                font-size: 30px;
-                height: inherit;
-                width: inherit;
-            }
-        }
+        // a {
+        //     border-radius: 25px;
+        //     display: inline-block;
+        //     height: 10px;
+        //     padding: 10px;
+        //     width: 10px;
+        //     font-size: 10px;
+        //     vertical-align: middle;
+        //
+        //     .glyphs {
+        //         vertical-align: top;
+        //         font-size: 30px;
+        //         height: inherit;
+        //         width: inherit;
+        //     }
+        // }
 
         a:visited {
             color: $tg-pink;
@@ -187,5 +186,37 @@ $tg-font-size-boxes: 35px;
         display: inline-block;
         vertical-align: middle;
         line-height: normal;
+    }
+
+    .arrow-right {
+      display: inline-block;
+      width: 0;
+      height: 0;
+      border-top: 20px solid transparent;
+      border-bottom: 20px solid transparent;
+      border-left: 35px solid $tg-pink;
+      margin-left: 10px;
+      margin-right: 10px;
+      margin-bottom: 10px;
+
+      &:hover {
+        border-top: 24px solid transparent;
+        border-bottom: 24px solid transparent;
+        border-left: 43px solid $tg-pink;
+        margin-left: 6px;
+        margin-right: 6px;
+        margin-bottom: 6px;
+      }
+    }
+    .arrow-right-inactive {
+      display: inline-block;
+      width: 0;
+      height: 0;
+      border-top: 20px solid transparent;
+      border-bottom: 20px solid transparent;
+      border-left: 35px solid mix($tg-yellow, $tg-pink, 80%);
+      margin-left: 10px;
+      margin-right: 10px;
+      margin-bottom: 10px;
     }
 }

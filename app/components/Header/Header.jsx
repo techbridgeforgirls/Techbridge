@@ -22,7 +22,7 @@ export class Header extends React.Component {
 
   componentWillReceiveProps(nextProps) {
     let routeChanged = nextProps.location !== this.props.location;
-    this.setState({ showBackButton: routeChanged });
+    this.setState({ showBackButton: (routeChanged && nextProps.location.pathname !== '/') });
     this.historyCount++;
   }
 

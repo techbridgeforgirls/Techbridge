@@ -71,10 +71,19 @@ var SelectedInterests = React.createClass({
             interest3: interest[2]
         };
 
+        var arrow;
+        if (this.props.interests.selected.length > 0) {
+          arrow = <Link to="/careerpicker" activeClassName="active">
+            <div className="arrow-right"></div>
+          </Link>;
+        } else {
+          arrow = <div className="arrow-right-inactive"></div>;
+        }
+
         return(
             <div id="tg-selectedInterests">
-            <FormattedMessage {...messages.iHeartInterests} values={strVals}/>
-            <Link to={this.props.interests.selected.length === 3 ? "/careerpicker" : "#"} activeClassName="active"><span>{heart}</span></Link>
+              <FormattedMessage {...messages.iHeartInterests} values={strVals}/>
+              {arrow}
             </div>
         );
     }

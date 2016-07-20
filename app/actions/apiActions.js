@@ -189,12 +189,14 @@ function fetchCareerData(careerId) {
     return fetch(ENDPOINT + ROLEMODEL_PATH + '?career=' + encodeURIComponent(careerId))
       .then(response => response.json())
       .then(careerData => {
-        var rolemodels = careerData.rolemodels;
-        rolemodels.forEach(function (rolemodel) {
-          rolemodel.id = rolemodel.firstname + rolemodel.lastname;
-        });
-        setCachedCareerData(careerId, careerData);
-        returnCachedData();
+        if (careerData) {
+          var rolemodels = careerData.rolemodels;
+          rolemodels.forEach(function (rolemodel) {
+            rolemodel.id = rolemodel.firstname + rolemodel.lastname;
+          });
+          setCachedCareerData(careerId, careerData);
+          returnCachedData();
+        }
       });
   };
 }
@@ -240,7 +242,7 @@ export function initState(query) {
     return dispatch(getInterests())
       .then(() => dispatch(selectInterests(interestIds, true)))
       .then(() => {
-        if (interestIds.length >= 3) {
+        if (interestIds.length > 0) {
           return dispatch(getCareers());
         }
       })
