@@ -22,7 +22,7 @@ export default function interests(state = { }, action) {
 
     case SELECT_INTERESTS:
       newSelected = [];
-      newSelected = newSelected.concat(state.selected || []);
+      newSelected = action.replace ? [] : newSelected.concat(state.selected || []);
       action.ids.forEach(function (id) {
         if (newSelected.indexOf(id) === -1) {
           newSelected.push(id);
@@ -35,11 +35,13 @@ export default function interests(state = { }, action) {
     case DESELECT_INTERESTS:
       var oldSelected = state.selected || [];
       newSelected = [];
-      oldSelected.forEach(function (id) {
-        if (action.ids.indexOf(id) === -1) {
-          newSelected.push(id);
-        }
-      });
+      if (action.ids) {
+        oldSelected.forEach(function (id) {
+          if (action.ids.indexOf(id) === -1) {
+            newSelected.push(id);
+          }
+        });
+      }
       return Object.assign({}, state, {
         selected: newSelected
       });

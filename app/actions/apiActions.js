@@ -218,10 +218,11 @@ export function getCareerData(careerId) {
     Initialising state
 **/
 
-export function selectInterests(interestIds) {
+export function selectInterests(interestIds, replace) {
   return {
     type: SELECT_INTERESTS,
-    ids: interestIds
+    ids: interestIds,
+    replace: replace
   };
 }
 
@@ -237,7 +238,7 @@ export function initState(query) {
     var interestIds = query.interests ? query.interests.split(INTERESTS_DELIM) : [];
 
     return dispatch(getInterests())
-      .then(() => dispatch(selectInterests(interestIds)))
+      .then(() => dispatch(selectInterests(interestIds, true)))
       .then(() => {
         if (interestIds.length >= 3) {
           return dispatch(getCareers());

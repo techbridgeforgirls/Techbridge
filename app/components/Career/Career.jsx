@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { FormattedMessage, defineMessages } from 'react-intl';
 import { InterestList } from '../InterestList/InterestList';
 import { Link } from 'react-router';
+import { Lightbox } from '../Lightbox/Lightbox';
 
 const messages = defineMessages({
   helpPeople: {
@@ -37,6 +38,14 @@ const COLLEGE_FIELDS = ['collegestovisit1', 'collegestovisit2', 'collegestovisit
 const SKILL_FIELDS = ['canhelppeople1', 'canhelppeople2', 'canhelppeople3'];
 
 export class Career extends React.Component {
+
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      showVideo: false
+    };
+  }
 
   getList(fields) {
     var careerData = this.props.careerData;
@@ -95,8 +104,9 @@ export class Career extends React.Component {
   }
 
   getVideoList() {
+    let self = this;
     let videos = this.getVideos().map(function(curVideo, index) {
-      return (<li key={'video-'+index}>{curVideo.title}</li>);
+      return (<li key={'video-'+index}><a href="#" onClick={self.showLightbox.bind(self, curVideo.title, curVideo.url)}>{curVideo.title}</a></li>);
     });
     return (<div>
       <h4 className="listTitle"><FormattedMessage {...messages.videosTitle}/></h4>
@@ -112,6 +122,18 @@ export class Career extends React.Component {
       <h4 className="listTitle"><FormattedMessage {...messages.collegesTitle}/></h4>
       <ul className="collegeList">{colleges}</ul>
     </div>);
+  }
+
+  showLightbox(curVideoTitle, curVideoUrl) {
+    // TEMP until fix data
+    if (curVideoUrl.indexOf('youtube') !== -1 && curVideoUrl.indexOf('embed') === -1) {
+      curVideoUrl = curVideoUrl.replace(/(?:http:\/\/)?(?:www\.)?(?:youtube\.com)\/(?:watch\?v=)?(.+)/g, 'www.youtube.com/embed/$1');
+    }
+    this.setState({ showVideo: true, curVideoTitle: curVideoTitle, curVideoUrl: curVideoUrl });
+  }
+
+  hideLightbox() {
+    this.setState({ showVideo: false });
   }
 
   render() {
@@ -141,6 +163,11 @@ export class Career extends React.Component {
     lists.push(<li className="list" key="list-videos">{this.getVideoList()}</li>);
     lists.push(<li className="list" key="list-colleges">{this.getCollegeList()}</li>);
 
+    let lightbox = '';
+    if (this.state.showVideo) {
+      lightbox = <Lightbox src={this.state.curVideoUrl} title={this.state.curVideoTitle} onClose={this.hideLightbox.bind(this)}></Lightbox>;
+    }
+
     return(
       <div id="tg-career">
         <div>
@@ -158,6 +185,7 @@ export class Career extends React.Component {
           </div>
         </div>
         <ul className="tg-careerLists">{lists}</ul>
+        {lightbox}
       </div>
     );
   }
@@ -168,26 +196,6 @@ Career.propTypes = {
   careerData: React.PropTypes.object,
   location: React.PropTypes.object
 };
-
-// Career.defaultProps = {
-//   careerTitle: 'Food Scientist',
-//   classes: ['Chemistry', 'Biology', 'Cooking'],
-//   videos: ['Science 360', 'Leaf Snap', 'Sugar Shake'],
-//   colleges: ['Purdue', 'East Tennessee', 'UC Berkley'],
-//   skills: ['by making foods healthy', 'by inventing new types of food and recipes'],
-//   stars: [{
-//     name: 'Katie',
-//     title: 'Food Scientist',
-//     img: 'http://medicalandhealthcare.com/wp-content/uploads/2015/10/Agricultural-and-Food-Scientist.jpg',
-//     id: 1
-//   },
-//   {
-//     name: 'Sarah',
-//     title: 'College Student',
-//     img: 'http://theglasshammer.com/wp-content/uploads/2015/03/girl-education.jpg',
-//     id: 2
-//   }]
-// };
 
 export default connect((state) => ({
   interests: state.interests,
