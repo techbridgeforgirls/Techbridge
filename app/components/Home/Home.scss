@@ -23,7 +23,6 @@ $tg-font-size-boxes: 35px;
         margin: 25px 20px;
         float: center;
         color: $tg-pink;
-        text-align: center;
         vertical-align: middle;
 
         .glyphs {
@@ -39,6 +38,7 @@ $tg-font-size-boxes: 35px;
             display: inline-block;
             min-width: 75px;
             min-height: $tg-font-size-boxes;
+            max-height: $tg-font-size-boxes;
             float: center;
             border-radius: 5px;
             font-size: $tg-font-size-boxes;
@@ -50,21 +50,29 @@ $tg-font-size-boxes: 35px;
         }
 
         .interestItemSelected {
-            display: inline-block;
+            // display: inline-flex;
             min-width: 75px;
+            max-width: min-content;
             max-height: $tg-font-size-boxes;
-            line-height: $tg-font-size-boxes;
+            min-height: $tg-font-size-boxes;
             float: center;
             border-radius: 5px;
-            font-size: $tg-font-size-boxes;
+            font-size: $tg-font-size-boxes - 5px;
 
-            padding: 5px;
+            padding: 2px 20px;
             // padding-bottom: 10px;
             background: $tg-pink;
             color: #fff;
-            margin: 0px 0px;
+            margin: 10px 0px;
             margin-bottom: 50px;
-            // vertical-align: top;
+            vertical-align: 18px;
+        }
+
+        .flexCenter {
+          display: flex;
+          justify-content: center;
+          flex-direction: column;
+          height: 400px;
         }
 
         a {
@@ -110,11 +118,26 @@ $tg-font-size-boxes: 35px;
         font-size: $tg-font-size-interests;
         float: left;
         overflow: auto;
+        cursor: default;
 
         .optionButton {
             background: transparentize($tg-yellow, 1);
             vertical-align: middle;
-            color: $tg-blue,
+            color: $tg-blue;
+            padding: 5px;
+
+            &:hover {
+                background: $tg-blue;
+                color: #fff;
+                vertical-align: middle;
+                border-radius: 5px;
+                padding: 5px 5px;
+
+                .glyphs {
+                    vertical-align: middle;
+                    color: #fff
+                }
+            }
         }
 
         .optionButtonSelected {
@@ -158,5 +181,11 @@ $tg-font-size-boxes: 35px;
     }
     ::-webkit-scrollbar-thumb {
         background: transparentize($tg-yellow, 1);
+    }
+
+    #tg-selectedItem {
+        display: inline-block;
+        vertical-align: middle;
+        line-height: normal;
     }
 }

@@ -127,7 +127,7 @@ export class Career extends React.Component {
   showLightbox(curVideoTitle, curVideoUrl) {
     // TEMP until fix data
     if (curVideoUrl.indexOf('youtube') !== -1 && curVideoUrl.indexOf('embed') === -1) {
-      curVideoUrl = curVideoUrl.replace(/(?:http:\/\/)?(?:www\.)?(?:youtube\.com)\/(?:watch\?v=)?(.+)/g, 'www.youtube.com/embed/$1');
+      curVideoUrl = curVideoUrl.replace('/watch?v=', '/embed/');
     }
     this.setState({ showVideo: true, curVideoTitle: curVideoTitle, curVideoUrl: curVideoUrl });
   }
@@ -172,7 +172,7 @@ export class Career extends React.Component {
       <div id="tg-career">
         <div>
           <InterestList interestList={interestsList} componentStyle={{ display: 'inline-block' }}/>
-          <div className="tg-careerHeader">/ {this.getCareer()}</div>
+          <div className="tg-careerHeader">- {this.getCareer()}</div>
         </div>
         <div className="tg-careerBody">
           <div className="tg-careerDetail">

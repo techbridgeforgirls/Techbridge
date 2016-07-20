@@ -58,7 +58,7 @@ var SelectedInterests = React.createClass({
         for (var i = 0; i < maxOptions; i++) {
             var interestItem = this.props.interests.selected[i];
             if(interestItem) {
-                interest[i] = <span className='interestItemSelected'>{interestItem}</span>;
+                interest[i] = <span className='interestItemSelected'><interestItem>{interestItem}</interestItem></span>;
             } else {
                 interest[i] = <span className='interestItem'>{interestItem}</span>;
             }
@@ -74,7 +74,7 @@ var SelectedInterests = React.createClass({
         return(
             <div id="tg-selectedInterests">
             <FormattedMessage {...messages.iHeartInterests} values={strVals}/>
-            <Link to="/careerpicker" activeClassName="active"><span>{heart}</span></Link>
+            <Link to={this.props.interests.selected.length === 3 ? "/careerpicker" : "#"} activeClassName="active"><span>{heart}</span></Link>
             </div>
         );
     }
