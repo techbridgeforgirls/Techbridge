@@ -195,28 +195,21 @@ $tg-font-size-boxes: 35px;
       border-top: 20px solid transparent;
       border-bottom: 20px solid transparent;
       border-left: 35px solid $tg-pink;
-      margin-left: 10px;
+      margin-left: 15px;
       margin-right: 10px;
       margin-bottom: 10px;
 
-      &:hover {
+      &.inactive {
+        border-left: 35px solid mix($tg-yellow, $tg-pink, 80%);
+      }
+
+      &:not(.inactive):hover {
         border-top: 24px solid transparent;
         border-bottom: 24px solid transparent;
         border-left: 43px solid $tg-pink;
-        margin-left: 6px;
+        margin-left: 11px;
         margin-right: 6px;
         margin-bottom: 6px;
       }
-    }
-    .arrow-right-inactive {
-      display: inline-block;
-      width: 0;
-      height: 0;
-      border-top: 20px solid transparent;
-      border-bottom: 20px solid transparent;
-      border-left: 35px solid mix($tg-yellow, $tg-pink, 80%);
-      margin-left: 10px;
-      margin-right: 10px;
-      margin-bottom: 10px;
     }
 }

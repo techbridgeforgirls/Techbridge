@@ -77,7 +77,7 @@ var SelectedInterests = React.createClass({
             <div className="arrow-right"></div>
           </Link>;
         } else {
-          arrow = <div className="arrow-right-inactive"></div>;
+          arrow = <div className="arrow-right inactive"></div>;
         }
 
         return(
