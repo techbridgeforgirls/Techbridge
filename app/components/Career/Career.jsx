@@ -9,7 +9,7 @@ const messages = defineMessages({
   helpPeople: {
     id: 'app.career.helpPeople',
     description: 'Header description of how professionals help',
-    defaultMessage: '{title} can help people:'
+    defaultMessage: 'A {title} can help people:'
   },
   meetStar: {
     id: 'app.career.meetStar',
@@ -106,7 +106,7 @@ export class Career extends React.Component {
   getVideoList() {
     let self = this;
     let videos = this.getVideos().map(function(curVideo, index) {
-      return (<li key={'video-'+index}><a href="#" onClick={self.showLightbox.bind(self, curVideo.title, curVideo.url)}>{curVideo.title}</a></li>);
+      return (<li key={'video-'+index}><button onClick={self.showLightbox.bind(self, curVideo.title, curVideo.url)}>{curVideo.title}</button></li>);
     });
     return (<div>
       <h4 className="listTitle"><FormattedMessage {...messages.videosTitle}/></h4>
@@ -146,11 +146,11 @@ export class Career extends React.Component {
 
     let stars = this.getRoleModels().map(function(star, index) {
       let url = '/stars/' + star.id;
-      return (<li key={'star-' + index}>
+      return (<li className="tg-starListItem" key={'star-' + index}>
         <Link to={{ pathname: url, query: location.query }}>
           <img src={star.img}/>
           <div className="tg-starDetail">
-            <div className="glyphs">&#57349;</div>
+            <div className="glyphs tg-starIcon">&#57349;</div>
             <div>{star.name}</div>
             <div>{star.title}</div>
           </div>
@@ -180,7 +180,7 @@ export class Career extends React.Component {
             <ul>{skills}</ul>
           </div>
           <div className="tg-starList">
-            <h3><FormattedMessage {...messages.meetStar}/></h3>
+            <h3 className="tg-starListHeader"><FormattedMessage {...messages.meetStar}/></h3>
             <ul>{stars}</ul>
           </div>
         </div>

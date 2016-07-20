@@ -2,7 +2,7 @@
   {
     "id": "app.career.helpPeople",
     "description": "Header description of how professionals help",
-    "defaultMessage": "{title} can help people:"
+    "defaultMessage": "A {title} can help people:"
   },
   {
     "id": "app.career.meetStar",

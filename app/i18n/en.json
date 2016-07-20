@@ -1,7 +1,7 @@
 {
   "app.appError.unavailable": "This page is unavailable.",
   "app.appError.unavailable2": "Please try again later.",
-  "app.career.helpPeople": "{title} can help people:",
+  "app.career.helpPeople": "A {title} can help people:",
   "app.career.meetStar": "Meet a STEM star:",
   "app.career.classesTitle": "Classes To Take",
   "app.career.videosTitle": "Videos To Watch",

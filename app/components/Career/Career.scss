@@ -1,5 +1,5 @@
 #tg-career {
-  margin: 30px 20px;
+  margin: 20px;
   .tg-careerHeader {
     display: inline-block;
     font-size: 25px;
@@ -45,6 +45,16 @@
         margin-left: 10px;
       }
     }
+    .tg-starListHeader {
+      margin-bottom: 15px;
+    }
+    .tg-starListItem {
+      margin-bottom: 10px;
+    }
+    .tg-starIcon {
+      color: inherit;
+      font-size: 30px;
+    }
   }
   .tg-careerLists {
     color: #4bb1d8;
@@ -58,8 +68,14 @@
       min-width: 150px;
       min-height: 100px;
       vertical-align: top;
-      a {
+      button {
+        background: transparent;
+        border: none;
+        font-size: inherit;
         color: inherit;
+        font-family: inherit;
+        text-decoration: underline;
+        cursor: pointer;
       }
     }
     .listTitle {

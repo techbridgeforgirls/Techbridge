@@ -47,18 +47,22 @@ export class Stars extends React.Component {
     }
     return(
       <div id="tg-stars">
-        <InterestList interestList={interestsList}/>
-        <div className="profile">
-          <img src={rolemodel.image} className="profile-image"/>
-          {rolemodel.firstname} {rolemodel.lastname}, <br />
-          {rolemodel.jobtitle}
+        <div className="interest-list">
+          <InterestList interestList={interestsList}/>
         </div>
-        <h1 className="heading">{rolemodel.blurb}</h1>
-        <div className="video" onClick={this.showLightbox.bind(this)}>
-          <iframe type="text/html" src={rolemodel.video} frameBorder="0"/>
-          {rolemodel.videotitle}
+        <div id="tg-stars-container">
+          <div className="profile">
+            <img src={rolemodel.image} className="profile-image"/>
+            {rolemodel.firstname} {rolemodel.lastname}, <br />
+            {rolemodel.jobtitle}
+          </div>
+          <h1 className="heading">{rolemodel.blurb}</h1>
+          <div className="video" onClick={this.showLightbox.bind(this)}>
+            <iframe type="text/html" src={rolemodel.video} frameBorder="0"/>
+            {rolemodel.videotitle}
+          </div>
+          {lightbox}
         </div>
-        {lightbox}
       </div>
     );
   }
@@ -75,5 +79,3 @@ export default connect((state) => ({
   interests: state.interests,
   careerData: state.careerData
 }))(Stars);
-
-
