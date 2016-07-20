@@ -26,3 +26,29 @@ ul {
   margin: 0;
   padding: 0;
 }
+
+// Other icons
+@font-face {
+  font-family: 'IcoMoon-Free';
+  src: url('font/IcoMoon-Free.eot?wkief4');
+  src: url('font/IcoMoon-Free.eot?wkief4#iefix') format('embedded-opentype'),
+       url('font/IcoMoon-Free.ttf?wkief4') format('truetype'),
+       url('font/IcoMoon-Free.woff?wkief4') format('woff'),
+       url('font/IcoMoon-Free.svg?wkief4#IcoMoon-Free') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
+
+.icomoon {
+    font-family: 'IcoMoon-Free' !important; // Items with this class should always use this font use !important to work around a bug in CEP on Windows
+    text-rendering: optimizeLegibility;
+    -webkit-font-feature-settings: "liga", "dlig";
+    -ms-font-feature-settings: "liga", "dlig";
+    -moz-font-feature-settings: "liga", "dlig";
+    -o-font-feature-settings: "liga", "dlig";
+    font-feature-settings: "liga", "dlig";
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    cursor: default;
+    font-weight: normal;
+}

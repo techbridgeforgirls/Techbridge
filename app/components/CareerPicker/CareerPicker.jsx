@@ -15,9 +15,44 @@ const messages = defineMessages({
 const careerPositions = [
   { left: 300, top: 150 },
   { left: 350, top: 400 },
-  { left: 530, top: 210 },
-  { left: 700, top: 380 }
+  { left: 550, top: 210 },
+  { left: 750, top: 380 }
 ];
+
+var CAREER_MAP = {
+  '3D printing and modeling technologies': 'printer',
+  'Aerospace Engineer': 'airplane',
+  'Biology': 'leaf',
+  'Biomechanical Engineer': 'leaf',
+  'Industrial Operations Engineering, Systems engineering': 'wrench',
+  'Chemical Engineer': 'lab',
+  'Computer Engineer/Data Scientist': 'keyboard',
+  'CSI': 'lab',
+  'Developer/Artist': 'keyboard',
+  'DJ': 'headphones',
+  'Sound Engineer': 'headphones',
+  'Electrical Engineer': 'power',
+  'Enviromental Science': 'leaf',
+  'Food Flavorist': 'spoon-knife',
+  'Food Nutrition Scientist': 'spoon-knife',
+  'Food Researcher / Engineer': 'spoon-knife',
+  'Graphic Design': 'pen',
+  'Landscape Architect': 'earth',
+  'Mechanical Engineer': 'wrench',
+  'Physicist': 'rocket',
+  'Rocket Scientist': 'wrench',
+  'Safety Engineer': 'lifebuoy',
+  'Sports Medicine': 'lab',
+  'Structural Engineer': 'wrench',
+  'Textile Engineering': 'user-tie',
+  'User Interface Designer': 'keyboard',
+  'Veterinarian': 'leaf',
+  'Zoo Keeper': 'leaf'
+};
+
+function getIcon(career) {
+  return career.icon || CAREER_MAP[career.name] || 'trophy';
+}
 
 class CareerPicker extends React.Component {
   constructor(props) {
@@ -37,7 +72,7 @@ class CareerPicker extends React.Component {
         careerElements.push(
           <Link to={{ pathname: '/career', query: Object.assign({ }, location.query, { career: career.id }) }} key={career.id}>
             <div className="career-circle" style={careerPositions[index]}>
-              <span className="career-circle-text">{career.name}</span>
+              <span className="career-circle-text"><span className="icomoon career-circle-icon">{getIcon(career)}</span><br/>{career.name}</span>
             </div>
           </Link>
         );

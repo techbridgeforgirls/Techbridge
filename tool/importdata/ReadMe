@@ -1,0 +1,10 @@
+ReadMe
+====================
+
+1. Generate csv input files. For each spread sheet, choose menu "File > Download As > Comma Separated Values (csv)" to csv files and put them under data folder.
+2  Configure in settings.js. Change settings.js to point to your csv files, and name of corresponding tables if necessary.
+2. Execute "./run.sh" in your command or terminal
+
+Notes:
+- Remove table(s) if they do exist.
+- For the generated csv file of "Careers", fill the missing column name; or add the column name in the original google doc.

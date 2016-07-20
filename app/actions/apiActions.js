@@ -131,7 +131,7 @@ function fetchCareers(interests) {
         if (response.status !== 200) { throw "Unexpected Response: ", + response.status; }
         return response.json();
       })
-      .then(json => json.careers ? json.careers.map(elem => ({ name: elem, id: elem })) : [])
+      .then(json => (json && json.careers && json.careers.map(elem => ({ name: elem, id: elem }))) || [])
       .then(careers => {
         setCachedCareers(interests, careers);
         returnCachedData();

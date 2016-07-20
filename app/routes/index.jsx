@@ -21,7 +21,12 @@ import { initState,  getInterestsId } from '../actions/apiActions';
 
 export default function(history, store) {
 
-  function onEnterRoute(nextState, replace) {
+  function onEnterRoute(nextState) {
+    // We make sure the state in the store matches the query parameters
+    store.dispatch(initState(nextState.location.query));
+  }
+
+  function onEnterCareerPicker(nextState, replace) {
     // Make sure the query data is consistent with the state
     var interests = store.getState().interests;
     var interestList =  getInterestsId(interests && interests.selected);
@@ -33,8 +38,7 @@ export default function(history, store) {
       });
     }
 
-    // We make sure the state in the store matches the query parameters
-    store.dispatch(initState(nextState.location.query));
+    onEnterRoute(nextState, replace);
   }
 
   return (
@@ -42,7 +46,7 @@ export default function(history, store) {
       <Route path="/" component={ App } onEnter={ onEnterRoute }>
         <IndexRoute component={ Home } />
       </Route>
-      <Route path="/careerpicker" component={ App } onEnter={ onEnterRoute }>
+      <Route path="/careerpicker" component={ App } onEnter={ onEnterCareerPicker }>
         <IndexRoute component={ CareerPicker } />
       </Route>
       <Route path="/web" component={ App } onEnter={ onEnterRoute }>

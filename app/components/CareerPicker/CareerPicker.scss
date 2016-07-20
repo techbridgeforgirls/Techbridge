@@ -15,11 +15,11 @@
   }
 
   .career-circle {
-    width: 200px;
-    height: 200px;
-    border-radius: 100px;
+    width: 230px;
+    height: 230px;
+    border-radius: 115px;
     border: 3px solid;
-    line-height: 200px;
+    line-height: 230px;
 
     color: #4bb1d8;
     background-color: #fff;
@@ -39,5 +39,11 @@
     vertical-align: middle;
     line-height: normal;
     padding: 10px;
+
+    text-align: center;
+  }
+
+  .career-circle-icon {
+    font-size: 45px;
   }
 }
