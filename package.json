@@ -5,14 +5,14 @@
   "main": "index.js",
   "repository": {
     "type": "git",
-    "url": "https://git.corp.adobe.com/jmitchel/rolemodels"
+    "url": "https://github.com/techbridgeforgirls/techbridge"
   },
   "scripts": {
     "start": "node index.js",
     "postinstall": "gulp build",
     "lint": "gulp lintServer && gulp lintClient"
   },
-  "author": "Adobe",
+  "author": "Techbridge",
   "dependencies": {
     "babel": "^6.3.26",
     "compression": "^1.6.1",
